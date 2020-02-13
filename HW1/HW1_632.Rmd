@@ -1,0 +1,91 @@
+---
+title: "HW1_632"
+author: "Prashan A. Welipitiya"
+date: "2/6/2020"
+output: pdf_document
+---
+
+# Exercise 1
+
+a. $\hat{y} = -1.1016 + 2.2606x$
+
+b. The Null Hypothesis is the slope is equal to zero. The Alternative Hypothesis is that the slope is not equal to zero. 
+Based on the p-value, we reject the Null Hypothesis.
+
+c. 
+```{r}
+2*pt(-2.699, 49)
+```
+
+d. 
+```{r}
+2.2606/0.0981
+```
+
+e.
+```{r}
+tc = abs(qt(.05/2, 48))
+b = 2.2606
+se = 0.0981
+b + tc*se
+b - tc*se
+```
+
+Yes, the interval is not equal to zero so it does agree with the results of the hypothesis test. 
+
+# Exercise 3
+
+```{r}
+setwd("C:/Users/Prashan.Welipitiya/Downloads")
+playbill = read.csv("playbill.csv")
+```
+# a. 
+```{r}
+par(mar=c(4.5,4.5,2,2)) #adjust margins
+plot(CurrentWeek ~ LastWeek, data = playbill)
+lm1 = lm(data = playbill, CurrentWeek ~ LastWeek)
+abline(lm1, lwd=1.5, lty=2)
+```
+# b. 
+```{r}
+confint(lm1)["LastWeek", ]
+```
+1 is plausible because it is in the interval. 
+
+# c. 
+```{r}
+
+newdata = data.frame(LastWeek=400000)
+predict(lm1, newdata, interval="predict", level=.95)
+
+```
+# d. 
+The lower and upper confidence levels are to far apart to assume that the two weeks will be equal. 
+
+# Exercise 4
+```{r}
+library(alr4)
+#help(oldfaith)
+```
+# a. 
+```{r}
+lm1 <- lm(Interval ~ Duration, data = oldfaith)
+summary(lm1)
+```
+
+# b. 
+```{r}
+par(mar=c(4.5,4.5,2,2)) #adjust margins
+plot(Interval ~ Duration, data = oldfaith)
+abline(lm1, lwd=1.5, lty=2)
+```
+
+# c.
+```{r}
+newdata = data.frame(Duration=250)
+predict(lm1, newdata, interval="predict", level=.95)
+```
+We expect the wait to be 78.2 seconds and the interval is a range of anywhere between 66.35 and 90.05 seconds. 
+
+# d. 
+The R squared shows a strong positive linear association. 
