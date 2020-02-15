@@ -4,3 +4,68 @@ author: "Prashan A. Welipitiya"
 date: "2/14/2020"
 output: pdf_document
 ---
+# Exercise 1
+a. Linearity, Independence, Normality, and Equal Variance. We check if the residuals vs fitted values has constant variance. We can also check if the relationship between x and y is linear.
+b. Outliers are points that dont follow the bulk of the data. In SLR we identify if the interval is outside -2 to 2 or -4 to 4. 
+c. Leverage points are points with an x-value that are distant from other x values. In SLR we calculate it using $h_i$ > 4/n.
+d. 
+
+# Exercise 2
+a. False, just constant variance. 
+b. True 
+c. False, transforming one variable works just fine. 
+d. True
+e. True
+
+# Exercise 3
+```{r}
+UN11 <- read.csv("https://ericwfox.github.io/data/UN11.csv")
+library(ggplot2)
+```
+
+a. 
+```{r}
+ggplot(UN11, aes(x = ppgdp, y = fertility)) + geom_point()
+```
+We should consider a log transformation because of how heavily right skewed the plot is. 
+
+b. 
+```{r}
+ggplot(UN11, aes(x = log(ppgdp), y = log(fertility))) + geom_point() + geom_smooth(method = "lm", se = FALSE)
+```
+In my opinion the association appears to be reasonably linear. 
+
+c. 
+```{r}
+lm1 = lm(log(fertility)~log(ppgdp), data = UN11)
+summary(lm1)
+```
+
+d. $log(\hat{y}) = -.2log(\hat{x}) +2.66$
+
+e. An increase in gross national product per person in US dollars can be associated with a decrease of fertility rate by .2. 
+
+f. 
+```{r}
+# new_x = data.frame(UN11$ppgdp == 1000)
+# predict(lm1, newdata = new_x, interval="prediction")
+
+```
+g. 
+```{r}
+par(mar=c(4,4,1,1), mfrow=c(1,2))
+plot(predict(lm1), resid(lm1), xlab="Fitted values", ylab="Residuals")
+abline(h=0)
+hist(resid(lm1), main="", xlab="Residuals")
+
+```
+
+The residuals have a normal distribution and the variance looks constant. 
+
+h.
+```{r}
+ind <- which(abs(rstandard(lm1)) > 2)
+UN11[ind, ]
+
+```
+I don't think they need to be removed because it is already linear. 
