@@ -9,6 +9,13 @@ a. Linearity, Independence, Normality, and Equal Variance. We check if the resid
 b. Outliers are points that dont follow the bulk of the data. In SLR we identify if the interval is outside -2 to 2 or -4 to 4. 
 c. Leverage points are points with an x-value that are distant from other x values. In SLR we calculate it using $h_i$ > 4/n.
 d. 
+error - $e_i$ ~ $N(0, \sigma^2)$
+residual - $\hat{e}_i = y_i - \hat{y}_i$ 
+standardized residual - $r_i = \frac{\hat{e}_i}{\hat{\sigma}\sqrt{1-h_i}}$
+$Var(e_i) = \sigma^2$
+$Var(\hat{e}_i) = \sigma^2[1-h_i]$
+
+The residuals vs fitted values clearly shows if there is any unequal variance in the residuals. Also if there are no obvious patterns, then  assumptions are reasonably satisfied. 
 
 # Exercise 2
 a. False, just constant variance. 
@@ -47,8 +54,11 @@ e. An increase in gross national product per person in US dollars can be associa
 
 f. 
 ```{r}
-# new_x = data.frame(UN11$ppgdp == 1000)
-# predict(lm1, newdata = new_x, interval="prediction")
+new_x = data.frame(ppgdp = 1000)
+predict(lm1, newdata = new_x, interval="prediction")
+exp(1.234567)
+exp(0.6258792)
+exp(1.843256)
 
 ```
 g. 
