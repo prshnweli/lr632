@@ -1,0 +1,80 @@
+---
+title: "HW3_632"
+author: "Prashan A. Welipitiya"
+date: "3/3/2020"
+output: pdf_document
+---
+
+# Exercise 1
+
+```{r}
+library(ISLR)
+#help(Auto)
+library(ggplot2)
+```
+## a. 
+```{r}
+ggplot(data=Auto, aes(x = horsepower, y = mpg)) + geom_point()
+```
+
+## b. 
+```{r}
+lm1 = lm(mpg~horsepower + I(horsepower^2), data = Auto)
+summary(lm1)
+```
+$$Y = 56.9 - 0.4x + 0.0012x^2$$
+
+## c. 
+```{r}
+x_new = data.frame(horsepower = 150)
+predict(lm1, newdata = x_new, interval = "prediction")
+```
+## d. 
+```{r}
+ggplot(data=Auto, aes(x = horsepower, y = mpg)) + geom_point() + stat_smooth(method = 'lm', formula = y ~ poly(x,2), se = FALSE)
+```
+
+## e. 
+
+```{r}
+par(mfrow = c(1, 2))
+plot(lm1, 1:2)
+```
+There is fanning and non constant variance and the residuals deviate from the normal distribution. 
+
+# Exercise 2
+
+```{r}
+#help(Carseats)
+```
+
+## a. 
+```{r}
+lm2 = lm(Sales~Price + Urban + US, data = Carseats)
+summary(lm2)
+```
+## b.
+
+A decrease in price by 0.05 is associated with an increase of a sale of one thousand units, when all other predictors are held firm.
+A location in an urban area on average will sell 20 less units compared to a non urban area. 
+A location in the US on average will sell 1,200 units more than a store outside the US. 
+
+## c. 
+$$\hat{y} = 13.04 - 0.05x_1 - 0.02x_2 + 1.2x_3$$
+## d. 
+The Urban variable. 
+
+## e. 
+```{r}
+lm3 = lm(Sales~Price + US, data = Carseats)
+summary(lm3)
+```
+
+## f. 
+23.35% of the variation in sales can be explained by the regression moddel. 
+
+## g. 
+```{r}
+confint(lm3)
+```
+
